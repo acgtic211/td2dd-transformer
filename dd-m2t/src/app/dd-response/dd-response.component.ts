@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { faDownload, faShapes, faCog, faEye, faDatabase, faVrCardboard, faClone, faBroadcastTower, faSitemap  } from '@fortawesome/free-solid-svg-icons';
-
+import { DdBuilderService } from '../dd-builder.service'
 
 @Component({
   selector: 'app-dd-response',
@@ -21,13 +21,16 @@ export class DdResponseComponent implements OnInit {
 
   @Input() services;
 
-  constructor() { }
+  constructor(private ddBuilderService: DdBuilderService) { }
 
   ngOnInit(): void {
   }
 
   showField(field){
     return this.services.services.includes(field);
+  }
+  downloadInfrastructure(){
+    this.ddBuilderService.zipInfrastructure();
   }
 
 }

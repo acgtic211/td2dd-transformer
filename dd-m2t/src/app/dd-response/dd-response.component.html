@@ -1,5 +1,5 @@
 <div class="ddContainer">
-    <div class="fullGridColumns cardBox" *ngIf="showField('infrastructure')"><fa-icon [icon]="faSitemap" size="2x"></fa-icon><p class="text_center">Infrastructure</p><fa-icon class="icon_right" [icon]="faDownload" size="1x"></fa-icon></div>
+    <div class="fullGridColumns cardBox" *ngIf="showField('infrastructure')"><fa-icon [icon]="faSitemap" size="2x"></fa-icon><p class="text_center">Infrastructure</p><fa-icon class="icon_right" (click)="downloadInfrastructure()" [icon]="faDownload" size="1x"></fa-icon></div>
     <div class="cardBox" *ngIf="showField('controller')"><fa-icon [icon]="faCog" size="2x"></fa-icon><p class="text_center">Controller</p><fa-icon class="icon_right" [icon]="faDownload" size="1x"></fa-icon></div>
     <div class="cardBox" *ngIf="showField('reflection')"><fa-icon [icon]="faClone" size="2x"></fa-icon><p class="text_center">Reflection</p><fa-icon class="icon_right" [icon]="faDownload" size="1x"></fa-icon></div>
     <div class="cardBox" *ngIf="showField('dataHandler')"><fa-icon [icon]="faDatabase" size="2x"></fa-icon><p class="text_center">DataHandler</p><fa-icon class="icon_right" [icon]="faDownload" size="1x"></fa-icon></div>
