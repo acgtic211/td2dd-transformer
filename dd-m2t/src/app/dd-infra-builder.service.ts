@@ -19,7 +19,7 @@ export class DdInfraBuilderService {
                             "    environment:\n",
                             "      MONGO_INITDB_ROOT_USERNAME: user\n",
                             "      MONGO_INITDB_ROOT_PASSWORD: pass\n"], {type: "text/plain;charset=utf-8"});
-    
+
 
     return dockerComposeFile;
 

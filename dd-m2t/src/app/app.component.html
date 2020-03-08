@@ -2,7 +2,8 @@
 <app-header></app-header>
 <div class="content-container">
 <div class="margin"></div>
-<app-wot-form></app-wot-form>
+<app-wot-form (eventServicesNeeded)="handleServicesNeeded($event)"></app-wot-form>
+<app-dd-response [services]="services"></app-dd-response>
 <router-outlet></router-outlet>
 </div>
 

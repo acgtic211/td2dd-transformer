@@ -1,0 +1,43 @@
+.ddContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(auto, auto);
+    width: 100%;
+    height: 70%;
+    grid-gap: 10px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.fullGridColumns{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column: 1 / 4;
+    margin-top: 5%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cardBox{
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background: #ffffff;
+    box-shadow:  5px 5px 10px #d9d9d9, 
+             -5px -5px 10px #ffffff;
+}
+.cardBox > * {
+
+    margin: 10px;
+
+}
+
+.icon_right{
+    text-align: end;
+}
+.text_center{
+    text-align: center;
+}

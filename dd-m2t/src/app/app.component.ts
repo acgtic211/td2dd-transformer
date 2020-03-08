@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dd-m2t';
+  services = {};
   
+  handleServicesNeeded($event){
+    console.log($event);
+    this.services = $event;
+  }
   
 }

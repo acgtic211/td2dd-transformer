@@ -35,9 +35,17 @@ textarea {
 }
 
 button{
-border: none;
-height: 50px;
-width: 50px;
-border-radius: 50%;
-
+    justify-self: center;
+    border: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    box-shadow:  5px 5px 10px #d9d9d9, 
+             -5px -5px 10px #ffffff;
 }
