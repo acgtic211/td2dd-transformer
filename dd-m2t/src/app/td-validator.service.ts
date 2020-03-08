@@ -1048,7 +1048,12 @@ export class TdValidatorService {
   
   // This method validates if the parameter data is a Thing Description
   validate(data):boolean{
-    var jsonData = JSON.parse(data);
+    try{
+        var jsonData = JSON.parse(data);
+    }catch(e){
+        return false;
+    }
+
     var ajv = Ajv({ allErrors: true });
     apply(ajv);
     var valid = ajv.validate(this.schema, jsonData);

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 body{
+    display: block;
     font-family: 'Roboto', sans-serif;
-    background-color: #1a3a4d;
-    color: white;
+    margin: 0;
 }

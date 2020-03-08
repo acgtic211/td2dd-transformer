@@ -1,0 +1,11 @@
+#header {
+    display: grid;
+    background-size: cover;
+    background-color: #1a3a4d;
+    color: white;
+    height: 100px;
+    top: 0;
+    z-index: 3;
+    align-items: center;
+    justify-content: space-evenly;
+}

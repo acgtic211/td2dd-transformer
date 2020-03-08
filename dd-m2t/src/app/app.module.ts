@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WotFormComponent } from './wot-form/wot-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WotFormComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
