@@ -15,7 +15,12 @@
       "es2018",
       "dom"
     ],
-    "types": ["node"]
+    "types": ["node"],
+    "paths":{
+      "jszip": [
+      "node_modules/jszip/dist/jszip.min.js"
+    ]
+    },
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

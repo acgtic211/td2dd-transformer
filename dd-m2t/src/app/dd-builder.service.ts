@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { DdInfraBuilderService } from './dd-infra-builder.service';
-import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
 var FileSaver = require('file-saver');
 var JSZip = require("jszip");
@@ -12,7 +11,7 @@ export class DdBuilderService {
 
   constructor(private ddInfraBuilderService: DdInfraBuilderService) { }
 
-  buildDiscovery(){
+  private buildDiscovery(){
 
     var discovery_mvn = new Blob(['<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>2.2.0.BUILD-SNAPSHOT</version><relativePath/> <!-- lookup parent from repository --></parent><groupId>es.ual.acg</groupId><artifactId>discovery</artifactId><version>0.0.1-SNAPSHOT</version><name>Discovery Server</name><description>Discovery service</description><properties><java.version>1.8</java.version><spring-cloud.version>Hoxton.BUILD-SNAPSHOT</spring-cloud.version></properties><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-starter-netflix-eureka-server</artifactId></dependency><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope><exclusions><exclusion><groupId>org.junit.vintage</groupId><artifactId>junit-vintage-engine</artifactId></exclusion></exclusions></dependency></dependencies><dependencyManagement><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-dependencies</artifactId><version>${spring-cloud.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build><repositories><repository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></repository><repository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></repository></repositories><pluginRepositories><pluginRepository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></pluginRepository><pluginRepository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></pluginRepository></pluginRepositories></project>'], {type: "text/plain;charset=utf-8"});
     var application_yml= new Blob(['server:\n',
@@ -28,6 +27,37 @@ export class DdBuilderService {
     var eurekaApplication_java= new Blob(['package es.ual.acg.discovery;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;\n','@SpringBootApplication\n@EnableEurekaServer\npublic class EurekaApplication {public static void main(String[] args) {SpringApplication.run(EurekaApplication.class, args);}}'],{type: "text/plain;charset=utf-8"});
     return {discovery_mvn, application_yml, eurekaApplication_java}
   }
+  private buildGateway(){
+    var gateway_mvn = new Blob(['<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>2.2.0.BUILD-SNAPSHOT</version><relativePath/> <!-- lookup parent from repository --></parent><groupId>es.ual.acg</groupId><artifactId>gateway</artifactId><version>0.0.1-SNAPSHOT</version><name>Gateway</name><description>Gateway service</description><properties><java.version>11</java.version><spring-cloud.version>Hoxton.BUILD-SNAPSHOT</spring-cloud.version></properties><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-starter-gateway</artifactId></dependency><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-starter-netflix-eureka-client</artifactId></dependency><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope><exclusions><exclusion><groupId>org.junit.vintage</groupId><artifactId>junit-vintage-engine</artifactId></exclusion></exclusions></dependency></dependencies><dependencyManagement><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-dependencies</artifactId><version>${spring-cloud.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build><repositories><repository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></repository><repository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></repository></repositories><pluginRepositories><pluginRepository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></pluginRepository><pluginRepository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></pluginRepository></pluginRepositories></project>'], {type: "text/plain;charset=utf-8"});
+    var application_yml = new Blob(['spring:\n',
+                                    '  application:\n',
+                                    '    name: discovery-service\n',
+                                    '  cloud:\n',
+                                    '    gateway:\n',
+                                    '      discovery:\n',
+                                    '        locator:\n',
+                                    '          enabled: true\n',
+                                    '          lower-case-service-id: true\n',
+                                    'eureka:\n',
+                                    '  client:\n',
+                                    '    eureka-server-connect-timeout-seconds: 5\n',
+                                    '    enabled: true\n',
+                                    '    fetch-registry: true\n',
+                                    '    register-with-eureka: false\n',
+                                    '    serviceUrl:\n',
+                                    '      defaultZone: http://localhost:8761/eureka/\n',
+                                    '  server:\n',
+                                    '    port: 80\n',
+                                    '  management:\n',
+                                    '    endpoint:\n',
+                                    '      gateway:\n',
+                                    '        enabled: true\n'],{type: "text/plain;charset=utf-8"});
+    var corsFilter_java = new Blob(['package es.ual.acg.gateway;import org.springframework.context.annotation.Bean;import org.springframework.context.annotation.Configuration;import org.springframework.http.HttpHeaders;import org.springframework.web.cors.CorsConfiguration;import org.springframework.web.cors.reactive.CorsWebFilter;import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;import org.springframework.web.reactive.config.CorsRegistry;import org.springframework.web.reactive.config.EnableWebFlux;import org.springframework.web.reactive.config.WebFluxConfigurer;\n@Configuration\n@EnableWebFlux\npublic class CORSFilter implements WebFluxConfigurer {   \n@Override\npublic void addCorsMappings(CorsRegistry registry) {registry.addMapping("/**").allowCredentials(true).allowedOrigins("*").allowedHeaders("*").allowedMethods("*");}@Bean\n public CorsWebFilter corsWebFilter(){CorsConfiguration corsConfiguration = new CorsConfiguration();corsConfiguration.setAllowCredentials(true);corsConfiguration.addAllowedHeader("*");corsConfiguration.addAllowedMethod("*");corsConfiguration.addAllowedOrigin("*");UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);return new CorsWebFilter(corsConfigurationSource);   }}'], {type: "text/plain;charset=utf-8"});
+    var gatewayApplication_java = new Blob(['package es.ual.acg.gateway;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.client.discovery.EnableDiscoveryClient;\n@SpringBootApplication\n@EnableDiscoveryClient\npublic class GatewayApplication {public static void main(String[] args) {SpringApplication.run(GatewayApplication.class, args);}}'],{type: "text/plain;charset=utf-8"});
+
+    return {gateway_mvn,application_yml,corsFilter_java,gatewayApplication_java};
+  }
+  
   servicesNeeded(td){
     var parsedTd = JSON.parse(td);
     var services = {services:["infrastructure", "controller"]};
@@ -43,11 +73,16 @@ export class DdBuilderService {
   zipInfrastructure(){
     var dockerc = this.ddInfraBuilderService.buildCommon();
     var discovery = this.buildDiscovery();
+    var gateway = this.buildGateway();
     var zip = new JSZip();
     zip.file("docker-compose.yml",dockerc);
     zip.file("/discovery/pom.xml", discovery.discovery_mvn)
     zip.file("/discovery/src/main/resources/application.yml", discovery.application_yml);
     zip.file("/discovery/src/main/java/es/ual/acg/discovery/EurekaApplication.java", discovery.eurekaApplication_java);
+    zip.file("/gateway/pom.xml", gateway.gateway_mvn)
+    zip.file("/gateway/src/main/resources/application.yml", gateway.application_yml);
+    zip.file("/gateway/src/main/java/es/ual/acg/gateway/GatewayApplication.java", gateway.gatewayApplication_java);
+    zip.file("/gateway/src/main/java/es/ual/acg/gateway/CORSFilter.java", gateway.corsFilter_java);
     zip.generateAsync({type:"blob"})
     .then(function (blob) {
         FileSaver.saveAs(blob, "infrastructure.zip");
