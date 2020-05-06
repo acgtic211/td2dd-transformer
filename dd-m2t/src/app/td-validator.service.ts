@@ -1053,7 +1053,7 @@ export class TdValidatorService {
     }catch(e){
         return false;
     }
-
+    console.log(jsonData)
     var ajv = Ajv({ allErrors: true });
     apply(ajv);
     var valid = ajv.validate(this.schema, jsonData);
