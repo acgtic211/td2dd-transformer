@@ -1,0 +1,158 @@
+/* Temperature sensor of House 1 */
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "id": "urn:dev:ops:32473-TempSensorH1-1234",
+    "title": "TempSensorH1",
+    "securityDefinitions": {
+        "basic_sc": {
+            "scheme": "basic",
+            "in": "header"
+        }
+    },
+    "security": [
+        "basic_sc"
+    ],
+    "properties": {
+        "temp": {
+            "type": "number",
+            "forms": [
+                {
+                    "href": "https://h1.example.com/temp",
+                    "op": "readproperty",
+                    "contentType": "Application/json"
+                }
+            ]
+        }
+    }
+}
+
+/* Thing Description of lights in House 1 */
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "id": "urn:dev:ops:32473-LightsH1-1234",
+    "@type": [
+        "knx"
+    ],
+    "title": "LightsH1",
+    "properties": {
+        "status": {
+            "@type": [
+                "ui"
+            ],
+            "type": "boolean",
+            "uriVariables": {
+                "group": {
+                    "type": {
+                        "string"
+                    }
+                },
+                "datatype": {
+                    "type": {
+                        "string"
+                    },
+                    "const": {
+                        "1.001"
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "h1.example.com/lights/status/{?group, datatype}",
+                    "op": "readproperty",
+                    "contentType": "Application/json;"
+                },
+                {
+                    "href": "h1.example.com/lights/status/sse{?group,datatype}",
+                    "op": "readproperty",
+                    "contentType": "Application/json;",
+                    "subprotocol": "sse"
+                }
+            ]
+        }
+    },
+    "actions": {
+        "toogle": {
+            "@type": [
+                "ui"
+            ],
+            "type": "boolean",
+            "uriVariables": {
+                "group": {
+                    "type": {
+                        "string"
+                    }
+                },
+                "datatype": {
+                    "type": {
+                        "string"
+                    },
+                    "const": {
+                        "1.001"
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "h1.example.com/lights/toogle{?group, datatype}",
+                    "contentType": "Application/json;"
+                }
+            ]
+        }
+    }
+}
+
+/* Thing Description of AC in house 1 */
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "id": "urn:dev:ops:32473-ACH1-1234",
+    "title": "ac-h1",
+    "properties": {
+        "temp": {
+            "type": "number",
+            "uriVariables": {
+                "value": {
+                    "type": {
+                        "string"
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "h1.example.com/ac/temp/{?value}",
+                    "contentType": "Application/json;",
+                    "subprotocol": "ws"
+                }
+            ]
+        }
+    },
+    "events": {
+        "overload": {
+            "type": "boolean",
+            "forms": [
+                {
+                    "href": "h1.example.com/ac/overload/",
+                    "contentType": "Application/json;"
+                }
+            ]
+        }
+    }
+}
+
+/* Thing Description of the Parking */
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "id": "urn:dev:ops:32473-ParkingSensor-1234",
+    "title": "ParkingSensor",
+    "properties": {
+        "freeSpots": {
+            "type": "number",
+            "forms": [
+                {
+                    "href": "https://parking.example.com/freespots",
+                    "op": "readproperty",
+                    "contentType": "Application/json;"
+                }
+            ]
+        }
+    }
+}
