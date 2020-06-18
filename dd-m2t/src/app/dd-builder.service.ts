@@ -76,13 +76,14 @@ export class DdBuilderService {
     var gateway = this.buildGateway();
     var zip = new JSZip();
     zip.file("docker-compose.yml",dockerc);
-    zip.file("/discovery/pom.xml", discovery.discovery_mvn)
-    zip.file("/discovery/src/main/resources/application.yml", discovery.application_yml);
-    zip.file("/discovery/src/main/java/es/ual/acg/discovery/EurekaApplication.java", discovery.eurekaApplication_java);
-    zip.file("/gateway/pom.xml", gateway.gateway_mvn)
-    zip.file("/gateway/src/main/resources/application.yml", gateway.application_yml);
-    zip.file("/gateway/src/main/java/es/ual/acg/gateway/GatewayApplication.java", gateway.gatewayApplication_java);
-    zip.file("/gateway/src/main/java/es/ual/acg/gateway/CORSFilter.java", gateway.corsFilter_java);
+    zip.file("discovery/pom.xml", discovery.discovery_mvn);
+    console.log(discovery.discovery_mvn)
+    zip.file("discovery/src/main/resources/application.yml", discovery.application_yml);
+    zip.file("discovery/src/main/java/es/ual/acg/discovery/EurekaApplication.java", discovery.eurekaApplication_java);
+    zip.file("gateway/pom.xml", gateway.gateway_mvn);
+    zip.file("gateway/src/main/resources/application.yml", gateway.application_yml);
+    zip.file("gateway/src/main/java/es/ual/acg/gateway/GatewayApplication.java", gateway.gatewayApplication_java);
+    zip.file("gateway/src/main/java/es/ual/acg/gateway/CORSFilter.java", gateway.corsFilter_java);
     zip.generateAsync({type:"blob"})
     .then(function (blob) {
         FileSaver.saveAs(blob, "infrastructure.zip");
