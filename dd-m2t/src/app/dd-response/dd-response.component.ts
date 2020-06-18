@@ -32,5 +32,7 @@ export class DdResponseComponent implements OnInit {
   downloadInfrastructure(){
     this.ddBuilderService.zipInfrastructure();
   }
-
+  downloadController(){
+    this.ddBuilderService.zipController();
+  }
 }

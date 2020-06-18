@@ -11,6 +11,8 @@ export class DdBuilderService {
 
   constructor(private ddInfraBuilderService: DdInfraBuilderService) { }
 
+  parsedTd;
+
   private buildDiscovery(){
 
     var discovery_mvn = new Blob(['<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>2.2.0.BUILD-SNAPSHOT</version><relativePath/> <!-- lookup parent from repository --></parent><groupId>es.ual.acg</groupId><artifactId>discovery</artifactId><version>0.0.1-SNAPSHOT</version><name>Discovery Server</name><description>Discovery service</description><properties><java.version>1.8</java.version><spring-cloud.version>Hoxton.BUILD-SNAPSHOT</spring-cloud.version></properties><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-starter-netflix-eureka-server</artifactId></dependency><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope><exclusions><exclusion><groupId>org.junit.vintage</groupId><artifactId>junit-vintage-engine</artifactId></exclusion></exclusions></dependency></dependencies><dependencyManagement><dependencies><dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-dependencies</artifactId><version>${spring-cloud.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build><repositories><repository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></repository><repository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></repository></repositories><pluginRepositories><pluginRepository><id>spring-milestones</id><name>Spring Milestones</name><url>https://repo.spring.io/milestone</url></pluginRepository><pluginRepository><id>spring-snapshots</id><name>Spring Snapshots</name><url>https://repo.spring.io/snapshot</url><snapshots><enabled>true</enabled></snapshots></pluginRepository></pluginRepositories></project>'], {type: "text/plain;charset=utf-8"});
@@ -57,19 +59,35 @@ export class DdBuilderService {
 
     return {gateway_mvn,application_yml,corsFilter_java,gatewayApplication_java};
   }
-  
+  private buildController(){
+    
+  }
+
   servicesNeeded(td){
-    var parsedTd = JSON.parse(td);
+    this.parsedTd = JSON.parse(td);
     var services = {services:["infrastructure", "controller"]};
-    if(parsedTd.properties || parsedTd.events) services.services.push("reflection");
-    if(parsedTd.events) services.services.push("eventHandler");
-    if(parsedTd["@type"] && parsedTd["@type"].includes("ui")) services.services.push("ui");
-    if(parsedTd["@type"] && parsedTd["@type"].includes("virtual")) services.services.push("virtualizer");
-    if(parsedTd.actions || parsedTd.properties) services.services.push("dataHandler");
+    if(this.parsedTd.properties || this.parsedTd.events){
+      services.services.push("reflection");
+    } 
+    if(this.parsedTd.events){
+      services.services.push("eventHandler");
+    } 
+    if(this.parsedTd["@type"] && this.parsedTd["@type"].includes("ui")) {
+      services.services.push("ui");
+    } 
+    if(this.parsedTd["@type"] && this.parsedTd["@type"].includes("virtual")){
+      services.services.push("virtualizer");
+    } 
+    if(this.parsedTd.actions || this.parsedTd.properties){
+      services.services.push("dataHandler");
+    } 
 
     return services;
   }
 
+  zipController(){
+    
+  }
   zipInfrastructure(){
     var dockerc = this.ddInfraBuilderService.buildCommon();
     var discovery = this.buildDiscovery();
@@ -77,7 +95,6 @@ export class DdBuilderService {
     var zip = new JSZip();
     zip.file("docker-compose.yml",dockerc);
     zip.file("discovery/pom.xml", discovery.discovery_mvn);
-    console.log(discovery.discovery_mvn)
     zip.file("discovery/src/main/resources/application.yml", discovery.application_yml);
     zip.file("discovery/src/main/java/es/ual/acg/discovery/EurekaApplication.java", discovery.eurekaApplication_java);
     zip.file("gateway/pom.xml", gateway.gateway_mvn);
