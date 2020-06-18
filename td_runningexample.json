@@ -155,30 +155,30 @@
         }
     },
     /* Thing Description of the Parking */
-{
-    "@context": "https://www.w3.org/2019/wot/td/v1",
-    "id": "urn:dev:ops:32473-ParkingSensor-1234",
-    "title": "ParkingSensor",
-    "securityDefinitions": {
-        "basic_sc": {
-            "scheme": "basic",
-            "in": "header"
-        }
-    },
-    "security": [
-        "basic_sc"
-    ],
-    "properties": {
-        "freeSpots": {
-            "type": "number",
-            "forms": [
-                {
-                    "href": "https://parking.example.com/freespots",
-                    "op": "readproperty",
-                    "contentType": "Application/json;"
-                }
-            ]
+    {
+        "@context": "https://www.w3.org/2019/wot/td/v1",
+        "id": "urn:dev:ops:32473-ParkingSensor-1234",
+        "title": "ParkingSensor",
+        "securityDefinitions": {
+            "basic_sc": {
+                "scheme": "basic",
+                "in": "header"
+            }
+        },
+        "security": [
+            "basic_sc"
+        ],
+        "properties": {
+            "freeSpots": {
+                "type": "number",
+                "forms": [
+                    {
+                        "href": "https://parking.example.com/freespots",
+                        "op": "readproperty",
+                        "contentType": "Application/json;"
+                    }
+                ]
+            }
         }
     }
-}
 ]
