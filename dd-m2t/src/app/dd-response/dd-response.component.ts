@@ -35,4 +35,19 @@ export class DdResponseComponent implements OnInit {
   downloadController(){
     this.ddBuilderService.zipController();
   }
+  downloadDataHandler(){
+    this.ddBuilderService.zipDataHandler();
+  }
+  downloadReflection(){
+    this.ddBuilderService.zipReflection();
+  }
+  downloadEventHandler(){
+    this.ddBuilderService.zipEventHandler();
+  }
+  downloadUi(){
+    this.ddBuilderService.zipUi();
+  }
+  downloadVirtualizer(){
+    console.log("TODO 😇")
+  }
 }
