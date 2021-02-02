@@ -1,10 +1,7 @@
 {
     "@context": "https://www.w3.org/2019/wot/td/v1",
-    "id": "urn:dev:ops:32473-LightsH1-1234",
-    "@type": [
-        "knx",
-        "ui"
-    ],
+    "id": "urn:dev:ops:32473-ParkingSensor-1234",
+    "title": "ParkingSensor",
     "securityDefinitions": {
         "basic_sc": {
             "scheme": "basic",
@@ -14,55 +11,13 @@
     "security": [
         "basic_sc"
     ],
-    "title": "LightsH1",
     "properties": {
-        "status": {
-            "@type": [
-                "ui"
-            ],
-            "type": "boolean",
-            "uriVariables": {
-                "group": {
-                    "type": "string"
-                },
-                "datatype": {
-                    "type": "string",
-                    "const": "1.001"
-                }
-            },
+        "freeSpots": {
+            "type": "number",
             "forms": [
                 {
-                    "href": "h1.example.com/lights/status/{?group, datatype}",
+                    "href": "https://parking.example.com/freespots",
                     "op": "readproperty",
-                    "contentType": "Application/json;"
-                },
-                {
-                    "href": "h1.example.com/lights/status/sse{?group,datatype}",
-                    "op": "readproperty",
-                    "contentType": "Application/json;",
-                    "subprotocol": "sse"
-                }
-            ]
-        }
-    },
-    "actions": {
-        "toogle": {
-            "@type": [
-                "ui"
-            ],
-            "type": "boolean",
-            "uriVariables": {
-                "group": {
-                    "type": "string"
-                },
-                "datatype": {
-                    "type": "string",
-                    "const": "1.001"
-                }
-            },
-            "forms": [
-                {
-                    "href": "h1.example.com/lights/toogle{?group, datatype}",
                     "contentType": "Application/json;"
                 }
             ]
