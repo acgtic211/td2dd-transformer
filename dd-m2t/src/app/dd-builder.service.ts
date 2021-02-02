@@ -134,26 +134,32 @@ export class DdBuilderService {
     return { eventHandler_mvn, mainApplication_java, propertyData_java, eventHandler_java, iDataHandler_java, application_properties};
   }
 
-
-  servicesNeeded(td) {
-    this.parsedTd = JSON.parse(td);
-    var services = { services: ["infrastructure", "controller"] };
-    if (this.parsedTd.properties || this.parsedTd.events) {
-      services.services.push("reflection");
-    }
-    if (this.parsedTd.events) {
-      services.services.push("eventHandler");
-    }
+  verify(td):string[]{
+    var types = [];
     if (this.parsedTd["@type"] && this.parsedTd["@type"].includes("ui")) {
-      services.services.push("ui");
+      types.push("ui");
     }
     if (this.parsedTd["@type"] && this.parsedTd["@type"].includes("virtual")) {
-      services.services.push("virtualizer");
+      types.push("virtualizer");
+    }
+    return types
+  }
+  servicesNeeded(td) {
+    this.parsedTd = JSON.parse(td);
+    var types = this.verify(this.parsedTd);
+    this.librariesNeed();
+    var services = { services: ["infrastructure", "controller", "reflection"] };
+    types.forEach(element => {
+      services.services.push(element);
+    });
+    console.log(services.services)
+    if (this.parsedTd.events) {
+      services.services.push("eventHandler");
     }
     if (this.parsedTd.actions || this.parsedTd.properties) {
       services.services.push("dataHandler");
     }
-    this.librariesNeed();
+    
     return services;
   }
   librariesNeed(){

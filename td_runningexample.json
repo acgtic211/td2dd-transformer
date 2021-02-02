@@ -51,17 +51,11 @@
                 "type": "boolean",
                 "uriVariables": {
                     "group": {
-                        "type": {
-                            "string"
-                        }
+                        "type": "string"
                     },
                     "datatype": {
-                        "type": {
-                            "string"
-                        },
-                        "const": {
-                            "1.001"
-                        }
+                        "type": "string",
+                        "const": "1.001"
                     }
                 },
                 "forms": [
@@ -87,17 +81,11 @@
                 "type": "boolean",
                 "uriVariables": {
                     "group": {
-                        "type": {
-                            "string"
-                        }
+                        "type": "string"
                     },
                     "datatype": {
-                        "type": {
-                            "string"
-                        },
-                        "const": {
-                            "1.001"
-                        }
+                        "type": "string",
+                        "const": "1.001"
                     }
                 },
                 "forms": [
@@ -128,9 +116,7 @@
                 "type": "number",
                 "uriVariables": {
                     "value": {
-                        "type": {
-                            "string"
-                        }
+                        "type": "string"
                     }
                 },
                 "forms": [
